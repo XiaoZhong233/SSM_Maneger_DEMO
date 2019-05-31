@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--使用typeAlias配置别名-->
+    <typeAliases>
+        <!--type指定全限定类名,alias指定别名，别名不区分大小写-->
+        <typeAlias type="domain.Product" alias="product"/>
+        <typeAlias type="domain.Orders" alias="orders"/>
+        <typeAlias type="domain.Member" alias="member"/>
+        <typeAlias type="domain.Traveller" alias="traveller"/>
+        <typeAlias type="domain.User" alias="user"/>
+        <typeAlias type="domain.Role" alias="role"/>
+        <typeAlias type="domain.Permission" alias="permission"/>
+        <typeAlias type="domain.SysLog" alias="log"/>
+    </typeAliases>
+    <!--这个mapper必须在最下面！！ 映射dao的配置文件-->
+    <mappers>
+        <mapper resource="dao/ProductMapper"/>
+        <mapper resource="dao/OrderMapper"/>
+        <mapper resource="dao/MemberMapper"/>
+        <mapper resource="dao/TravellerMapper"/>
+        <mapper resource="dao/UserMapper"/>
+        <mapper resource="dao/RoleMapper"/>
+        <mapper resource="dao/PermissionMapper"/>
+        <mapper resource="dao/User_RoleMapper"/>
+        <mapper resource="dao/SysLogMapper"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IOrdersDao">
+    <!--嵌套结果查询-->
+    <resultMap id="orderMap" type="domain.Orders">
+        <id property="id" column="oid"/>
+        <result property="orderNum" column="orderNum"/>
+        <result property="orderTime" column="orderTime"/>
+        <result property="orderStatus" column="orderStatus"/>
+        <result property="peopleCount" column="peopleCount"/>
+        <result property="payType" column="payType"/>
+        <result property="orderDesc" column="orderDesc"/>
+        <!--association:用于映射关联查询单个对象的信息
+           property:要将关联查询的用户信息映射到Orders中那个属性-->
+        <association property="product" javaType="domain.Product">
+            <!-- id:关联查询的唯一标识
+                column:指定唯一标识信息的列
+                property:映射到product的哪个属性
+            -->
+            <id column="pid" property="id"/>
+            <result column="productNum" property="productNum"/>
+            <result column="productName" property="productName"/>
+            <result column="cityName" property="cityName"/>
+            <result column="departureTime" property="departureTime"/>
+            <result column="productPrice" property="productPrice"/>
+            <result column="productDesc" property="productDesc"/>
+            <result column="productStatus" property="productStatus"/>
+        </association>
+
+        <!--查询映射会员信息-->
+        <association property="member" javaType="domain.Member">
+            <id column="mid" property="id"/>
+            <result column="name" property="name"/>
+            <result column="nickname" property="nickname"/>
+            <result column="phoneNum" property="phoneNum"/>
+            <result column="email" property="email"/>
+        </association>
+
+        <!--根据中间表查询旅客信息-->
+        <!-- 关联旅客明细信息
+           一个订单关联查询出了多条旅客,要使用collection映射
+           collection:对关联查询到的多条记录映射到集合中
+           property:将关联查询到的多条记录映射到orders类的那个属性
+           ofType:指定映射的集合属性中pojo的类型
+       -->
+        <collection property="travellers"  ofType="domain.Traveller">
+            <id column="tid" property="id"/>
+            <result column="name" property="name"/>
+            <result column="sex" property="sex"/>
+            <result column="phoneNum" property="phoneNum"/>
+            <result column="credentialsType" property="credentialsType"/>
+            <result column="credentialsNum" property="credentialsNum"/>
+            <result column="travellerType" property="travellerType"/>
+        </collection>
+    </resultMap>
+
+    <!--定义Order的ResultMap懒加载模式映射,嵌套查询-->
+    <resultMap id="OrderMapLazy" type="domain.Orders">
+        <id property="id" column="id"/>
+        <result property="orderNum" column="orderNum"/>
+        <result property="orderTime" column="orderTime"/>
+        <result property="orderStatus" column="orderStatus"/>
+        <result property="peopleCount" column="peopleCount"/>
+        <result property="payType" column="payType"/>
+        <result property="orderDesc" column="orderDesc"/>
+        <!--配置Order对象中product映射 ofType是类型，用全限定名或别名-->
+        <!--一对一查询-->
+        <association property="product" javaType="domain.Product" select="dao.IProductDao.findById" column="productId" fetchType="lazy"/>
+        <association property="member" javaType="domain.Member" select="dao.IMemberDao.findMemberById" column="memberId" fetchType="lazy"/>
+        <!--多对多查询,需要根据中间表来查询-->
+        <collection property="travellers" ofType="domain.Traveller" column="id" select="dao.ITravellerDao.findTravellerByOrderId" fetchType="lazy"/>
+        <!--如果是一对多查询，还是用colleaction标签，只不过不需要通过中间表查询-->
+    </resultMap>
+
+    <select id="findAll" resultMap="orderMap">
+     select o.id as oid,o.memberid,o.orderDesc,o.orderNum,o.orderStatus,o.orderTime,o.payType,o.peopleCount,o.productId,
+     p.id as pid,p.cityName,p.departureTime,p.productDesc,p.productName,p.productNum,p.productPrice,p.productStatus,
+     t.id as tid,t.credentialsNum,t.credentialsType,t.`name`,t.phoneNum,t.sex,t.travellerType,
+     m.id as mid,m.email,m.`name`,m.nickName,m.phoneNum
+     from orders o LEFT OUTER JOIN order_traveller ot on o.id=ot.orderId , product p,traveller t,member m
+     WHERE o.productId = p.id and t.id = ot.travellerId and m.id = o.memberid
+    </select>
+
+    <select id="findAll1" resultMap="OrderMapLazy">
+        select * from orders
+    </select>
+
+    <select id="getAll" resultType="domain.Orders">
+        select * from orders
+    </select>
+
+    <select id="findById" resultMap="OrderMapLazy" parameterType="java.lang.String">
+        select * from orders where id = #{id}
+    </select>
+
+</mapper>

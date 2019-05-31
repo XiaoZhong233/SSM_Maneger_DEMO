@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IProductDao">
+    <select id="findAll" resultType="product">
+        select * from product
+    </select>
+    <insert id="insert" parameterType="product">
+        <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.String" order="BEFORE">
+            select replace(uuid(),'-','')
+        </selectKey>
+        insert into product(id,productNum,productName,departureTime,cityName,productPrice,productDesc,productStatus)
+         values (#{id},#{productNum},#{productName},#{departureTime},#{cityName},#{productPrice},#{productDesc},#{productStatus})
+    </insert>
+    <select id="findById" resultType="product" parameterType="java.lang.String">
+        select * from product where id = #{id}
+    </select>
+</mapper>

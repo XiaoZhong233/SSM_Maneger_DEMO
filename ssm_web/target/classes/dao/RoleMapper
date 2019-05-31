@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.IRoleDao">
+    <resultMap id="user_role_permission_map" type="role">
+        <id column="id" property="id"/>
+        <result column="roleName" property="roleName"/>
+        <result column="roleDesc" property="roleDesc"/>
+        <collection property="users" ofType="user" column="id" fetchType="eager" select="dao.IUserDao.findByRoleId"/>
+        <!--对权限进行查询-->
+        <collection property="permissions" ofType="permission" column="id" fetchType="eager" select="dao.IPermissionDao.findByRoleId"/>
+    </resultMap>
+
+
+    <select id="findRolesByUserId" resultMap="user_role_permission_map" parameterType="java.lang.String">
+        select * from role where id in (select roleId from users_role where userId = #{uid})
+    </select>
+
+    <select id="findRolesByPermissionId" resultType="role" parameterType="java.lang.String">
+        select * from role where id in (select roleId from role_permission where permissionId = #{pid})
+    </select>
+
+
+    <resultMap id="role_map" type="role">
+        <id column="id" property="id"/>
+        <result column="roleName" property="roleName"/>
+        <result column="roleDesc" property="roleDesc"/>
+        <!--对权限进行查询-->
+        <collection property="permissions" ofType="permission" column="id" fetchType="eager" select="dao.IPermissionDao.findByRoleId"/>
+        <!--对用户信息进行查询-->
+        <collection property="users" ofType="user" column="id" fetchType="eager" select="dao.IUserDao.findByRoleId"/>
+    </resultMap>
+    <select id="findAll" resultMap="role_map">
+        select * from role
+    </select>
+    <select id="findRoleById" resultMap="role_map" parameterType="java.lang.String">
+        select * from role where id = #{id}
+    </select>
+    
+    <insert id="insert" parameterType="role">
+        <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.String" order="BEFORE">
+            select replace(uuid(),'-','')
+        </selectKey>
+        insert into role(id,roleName,roleDesc) values (#{id},#{roleName},#{roleDesc})
+    </insert>
+
+    <select id="findOtherPermission" resultType="permission" parameterType="java.lang.String">
+        select * from permission where id not in (select permissionId from role_permission where roleId = #{rid})
+    </select>
+
+    <insert id="addPermissionToRole" parameterType="hashmap">
+        insert into role_permission(permissionId,roleId) values (#{permissionId},#{roleId})
+    </insert>
+</mapper>
