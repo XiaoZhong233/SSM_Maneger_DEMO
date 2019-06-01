@@ -357,8 +357,8 @@
 			<div class="pull-right hidden-xs">
 				<b>Version</b> 1.0.8
 			</div>
-			<strong>Copyright &copy; 2019-2019 <a
-				href="https://blog.csdn.net/weixin_41154636">钟浩伟</a>.
+			<strong>资源权限 &copy; 2019-2019 <a
+				href="https://blog.csdn.net/weixin_41154636">zhong</a>.
 			</strong> All rights reserved.
 		</footer>
 		<!-- 底部导航 /-->

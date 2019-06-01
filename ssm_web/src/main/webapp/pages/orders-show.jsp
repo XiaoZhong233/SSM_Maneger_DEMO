@@ -244,9 +244,10 @@
 		<div class="pull-right hidden-xs">
 			<b>Version</b> 1.0.8
 		</div>
-		<strong>Copyright &copy; 2019 <a
-			href="${pageContext.request.contextPath}/index.jsp">后台管理系统</a>.
-		</strong> All rights reserved. </footer>
+			<strong>Copyright &copy; 2019 <a
+					href="${pageContext.request.contextPath}/index.jsp">后台管理系统</a>.
+			</strong> All rights reserved.
+		</footer>
 		<!-- 底部导航 /-->
 
 	</div>

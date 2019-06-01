@@ -12,7 +12,7 @@
 
 
 
-<title>订单详情</title>
+<title>日志详情</title>
 <meta name="description" content="AdminLTE2定制版">
 <meta name="keywords" content="AdminLTE2定制版">
 

@@ -13,7 +13,6 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:applicationContext.xml,classpath*:spring-security.xml</param-value>
   </context-param>
-
   <!--监听请求-->
   <listener>
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
