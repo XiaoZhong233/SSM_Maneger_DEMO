@@ -17,7 +17,6 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 <!--    <context:component-scan base-package="dao"/>-->
     <context:component-scan base-package="service"/>
 
-
     <!--Spring整合mybatis-->
     <!--配置连接池-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">

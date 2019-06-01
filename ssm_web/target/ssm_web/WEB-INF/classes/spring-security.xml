@@ -10,7 +10,6 @@
     <!--开启权限控制标签-->
     <security:global-method-security jsr250-annotations="disabled" secured-annotations="disabled" pre-post-annotations="enabled"/>
 
-
     <!-- 配置不拦截的资源 -->
     <security:http pattern="/login.jsp" security="none"/>
     <security:http pattern="/failer.jsp" security="none"/>

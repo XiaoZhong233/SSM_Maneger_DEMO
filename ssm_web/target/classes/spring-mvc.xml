@@ -22,9 +22,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-
     <!--告诉前端控制器哪些静态资源不拦截-->
-    <!-- 设置静态资源不过滤 -->
     <!-- 设置静态资源不过滤 -->
     <mvc:resources location="/css/" mapping="/css/**" />
     <mvc:resources location="/img/" mapping="/img/**" />
@@ -35,10 +33,10 @@
     <mvc:annotation-driven/>
 
     <!--
-支持AOP的注解支持，AOP底层使用代理技术
-JDK动态代理，要求必须有接口
-cglib代理，生成子类对象，proxy-target-class="true" 默认使用cglib的方式
--->
+    支持AOP的注解支持，AOP底层使用代理技术
+    JDK动态代理，要求必须有接口
+    cglib代理，生成子类对象，proxy-target-class="true" 默认使用cglib的方式
+    -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 </beans>
