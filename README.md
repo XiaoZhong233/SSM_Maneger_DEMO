@@ -9,16 +9,16 @@
 ![demo](https://github.com/XiaoZhong233/SSM_Maneger_DEMO/blob/master/demo.PNG)
 
 # 技术点：
-1、Spring IOC & DI（控制反转和依赖注入）
+1. Spring IOC & DI（控制反转和依赖注入）
 
-2、Spring AOC (切面编程)
+2. Spring AOC (切面编程)
 
-3、Spring Security 进行用户登录与注销等安全授权
+3. Spring Security 进行用户登录与注销等安全授权
 
-4、Mybatis dao层半ORM数据库技术（单表查询、多表查询等）
+4. Mybatis dao层半ORM数据库技术（单表查询、多表查询等）
 
-5、Mybatis插件PageHelper，进行分页查询
+5. Mybatis插件PageHelper，进行分页查询
 
-6、方法级权限关联与控制（运用Sercurity标签等技术）
+6. 方法级权限关联与控制（运用Sercurity标签等技术）
 
-7、前端使用AdminLTE静态页面模板以及jquery等技术
+7. 前端使用AdminLTE静态页面模板以及jquery等技术
